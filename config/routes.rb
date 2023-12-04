@@ -7,4 +7,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :sessions, only: [:new, :create] do
+    delete :logout, on: :collection, to: 'sessions#destroy'
+  end
 end
