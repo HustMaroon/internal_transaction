@@ -9,7 +9,8 @@ module Transferable
   end
 
   def transfer_to(entity, amount, currency)
-    ActiveRecord::Base.transaction do
+    with_lock do
+      update(last_tx_timestamp: Time.current)
       debit_transactions.create!(
         target: entity,
         target_type: entity.class.name,
