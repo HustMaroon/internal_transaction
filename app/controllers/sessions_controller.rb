@@ -8,15 +8,14 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       login user
       flash[:success] = 'Login successfully'
-      redirect_to new_session_path
     else
       flash[:danger] = 'Invalid email or password'
-      render 'new'
     end
+    redirect_to new_session_path
   end
 
   def destroy
-    session[:user_id] = nil
-    redirect_to new_session_path
+    session.delete(:user_id)
+    @current_user = nil
   end
 end
